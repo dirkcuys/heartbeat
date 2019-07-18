@@ -19,13 +19,13 @@ def beat(request, identifier):
         except json.JSONDecodeError as e:
             logger.exception('Could not load json body')
 
-    HeartBeat.objects.create(identifier=identifier, meta=data)
+    HeartBeat.objects.create(identifier=identifier, meta=json.dumps(data))
     return JsonResponse({'status': 'ok'})
 
 
 def graph(request, identifier):
     sequence = HeartBeat.objects.filter(identifier=identifier).order_by('created_at')
-    map_beat = lambda b: {'created_at': b.created_at, 'meta': b.meta or {}}
+    map_beat = lambda b: {'created_at': b.created_at, 'meta': json.loads(b.meta)}
     resp_data = {
         'status': 'ok',
         'count': sequence.count(),
