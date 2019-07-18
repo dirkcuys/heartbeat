@@ -26,7 +26,7 @@ SECRET_KEY = 'py2fd17!fg21x#2n8db_bnryn5(2+!-sfro0=j!n=x$v_zb2qo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [env('HOST')]
+ALLOWED_HOSTS = [env('HOST', None)]
 
 
 # Application definition
