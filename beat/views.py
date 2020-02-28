@@ -32,3 +32,14 @@ def graph(request, identifier):
         'data': [map_beat(b) for b in sequence]
     }
     return JsonResponse(resp_data)
+
+
+def status(request, identifier):
+    sequence = HeartBeat.objects.filter(identifier=identifier).order_by('-created_at')[0:1]
+    map_beat = lambda b: {'created_at': b.created_at, 'meta': json.loads(b.meta)}
+    resp_data = {
+        'status': 'ok',
+        'count': sequence.count(),
+        'data': [map_beat(b) for b in sequence]
+    }
+    return JsonResponse(resp_data)
